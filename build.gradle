@@ -14,7 +14,6 @@ allprojects {
 }
 
 subprojects {
-    // ❗ common-bom 은 java-platform을 쓸 것이므로 제외
     if (project.name != 'common-bom') {
         apply plugin: 'java-library'
 
@@ -25,12 +24,13 @@ subprojects {
         }
 
         dependencies {
-            implementation platform('org.springframework.boot:spring-boot-dependencies:4.0.0')
+            // BOM은 compile/test 모두 정합성 있게 가져가려면 api/implementation보단 enforcedPlatform 권장
+            implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
+            testImplementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
 
-            compileOnly 'org.projectlombok:lombok'
-            annotationProcessor 'org.projectlombok:lombok'
-
+            // JUnit Jupiter + 런처 명시
             testImplementation 'org.junit.jupiter:junit-jupiter'
+            testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         }
 
         test {

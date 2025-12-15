@@ -7,11 +7,11 @@ public record ErrorResponse(
 	String message,
 	Map<String, Object> details
 ) {
-	public ErrorResponse of(String code, String message) {
+	public static ErrorResponse of(String code, String message) {
 		return new ErrorResponse(code, message, null);
 	}
 
-	public ErrorResponse of(String code, String message, Map<String, Object> details) {
+	public static ErrorResponse of(String code, String message, Map<String, Object> details) {
 		return new ErrorResponse(code, message, details);
 	}
 }
