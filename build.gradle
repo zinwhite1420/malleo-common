@@ -1,0 +1,40 @@
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version '4.0.0' apply false
+    id 'io.spring.dependency-management' version '1.1.6' apply false
+}
+
+allprojects {
+    group = 'com.malleo'
+    version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    // ❗ common-bom 은 java-platform을 쓸 것이므로 제외
+    if (project.name != 'common-bom') {
+        apply plugin: 'java-library'
+
+        java {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(25)
+            }
+        }
+
+        dependencies {
+            implementation platform('org.springframework.boot:spring-boot-dependencies:4.0.0')
+
+            compileOnly 'org.projectlombok:lombok'
+            annotationProcessor 'org.projectlombok:lombok'
+
+            testImplementation 'org.junit.jupiter:junit-jupiter'
+        }
+
+        test {
+            useJUnitPlatform()
+        }
+    }
+}

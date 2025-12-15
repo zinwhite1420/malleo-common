@@ -1,0 +1,11 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api 'org.slf4j:slf4j-api'
+    api 'jakarta.validation:jakarta.validation-api'
+
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+}

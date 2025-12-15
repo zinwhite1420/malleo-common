@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+dependencies {
+    api project(':common-core')
+
+    api 'org.springframework.boot:spring-boot-starter-web'
+    api 'org.springframework.boot:spring-boot-starter-validation'
+    api 'org.springframework.boot:spring-boot-autoconfigure'
+
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+}
+
+/*
+ * META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports 파일 필요
+ * 예시:
+ * com.malleo.common.web.WebAutoConfiguration
+ */
