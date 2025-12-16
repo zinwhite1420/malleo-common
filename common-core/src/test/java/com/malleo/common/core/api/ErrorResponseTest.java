@@ -45,7 +45,7 @@ class ErrorResponseTest {
 	}
 
 	@Test
-	@DisplayName("from(code, message)는 details=null 생성")
+	@DisplayName("from(ErrorCode)는 ErrorCode로부터 ErrorResponse를 생성, details=null 생성")
 	void from_withoutDetails_shouldSetDetailsNull() {
 		// given
 		ErrorCode errorCode = CommonErrorCode.NOT_FOUND;
@@ -60,7 +60,7 @@ class ErrorResponseTest {
 	}
 
 	@Test
-	@DisplayName("from(code, message, details)는 details 그대로 보존")
+	@DisplayName("from(ErrorCode)는 details 포함하여 ErrorCode로부터 ErrorResponse를 생성")
 	void from_withDetails_shouldKeepDetails() {
 		// given
 		ErrorCode errorCode = CommonErrorCode.INVALID_REQUEST;
