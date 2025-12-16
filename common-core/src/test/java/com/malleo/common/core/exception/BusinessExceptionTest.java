@@ -48,11 +48,12 @@ class BusinessExceptionTest {
 		assertEquals("invalid format", ex.getDetails().get("reason"));
 	}
 
+	@SuppressWarnings("ConstantConditions") //테스트에서 경고 무시
 	@Test
 	@DisplayName("ErrorCode가 null이면 예외를 던진다(권장)")
 	void constructor_withNullErrorCode_shouldThrow() {
 		// when & then
-		assertThrows(NullPointerException.class, () -> new BusinessException(null));
+		assertThrows(NullPointerException.class, () -> {throw new BusinessException(null);});
 	}
 
 
