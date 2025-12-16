@@ -7,6 +7,9 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.malleo.common.core.error.CommonErrorCode;
+import com.malleo.common.core.error.ErrorCode;
+
 class ErrorResponseTest {
 
 	@Test
@@ -32,6 +35,43 @@ class ErrorResponseTest {
 
 		// when
 		ErrorResponse err = ErrorResponse.of("C-400", "Invalid request", details);
+
+		// then
+		assertEquals("C-400", err.code());
+		assertEquals("Invalid request", err.message());
+		assertNotNull(err.details());
+		assertEquals("name", err.details().get("field"));
+		assertEquals("blank", err.details().get("reason"));
+	}
+
+	@Test
+	@DisplayName("from(code, message)는 details=null 생성")
+	void from_withoutDetails_shouldSetDetailsNull() {
+		// given
+		ErrorCode errorCode = CommonErrorCode.NOT_FOUND;
+
+		// when
+		ErrorResponse err = ErrorResponse.from(errorCode);
+
+		// then
+		assertEquals("C-404", err.code());
+		assertEquals("Resource not found", err.message());
+		assertNull(err.details());
+	}
+
+	@Test
+	@DisplayName("from(code, message, details)는 details 그대로 보존")
+	void from_withDetails_shouldKeepDetails() {
+		// given
+		ErrorCode errorCode = CommonErrorCode.INVALID_REQUEST;
+
+		Map<String, Object> details = Map.of(
+			"field", "name",
+			"reason", "blank"
+		);
+
+		// when
+		ErrorResponse err = ErrorResponse.from(errorCode , details);
 
 		// then
 		assertEquals("C-400", err.code());
