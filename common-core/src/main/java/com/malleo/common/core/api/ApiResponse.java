@@ -1,7 +1,7 @@
 package com.malleo.common.core.api;
 
 public record ApiResponse<T>(
-	boolean isSuccess,
+	boolean success,
 	T data,
 	ErrorResponse error,
 	String traceId

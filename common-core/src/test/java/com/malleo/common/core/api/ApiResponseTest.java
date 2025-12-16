@@ -17,7 +17,7 @@ class ApiResponseTest {
 		ApiResponse<String> res = ApiResponse.ok("hello", traceId);
 
 		// then
-		assertTrue(res.isSuccess());
+		assertTrue(res.success());
 		assertEquals("hello", res.data());
 		assertNull(res.error());
 		assertEquals(traceId, res.traceId());
@@ -33,7 +33,7 @@ class ApiResponseTest {
 		ApiResponse<Void> res = ApiResponse.ok(traceId);
 
 		// then
-		assertTrue(res.isSuccess());
+		assertTrue(res.success());
 		assertNull(res.data());
 		assertNull(res.error());
 		assertEquals(traceId, res.traceId());
@@ -50,7 +50,7 @@ class ApiResponseTest {
 		ApiResponse<Void> res = ApiResponse.fail(err, traceId);
 
 		// then
-		assertFalse(res.isSuccess());
+		assertFalse(res.success());
 		assertNull(res.data());
 		assertNotNull(res.error());
 		assertEquals("C-400", res.error().code());
