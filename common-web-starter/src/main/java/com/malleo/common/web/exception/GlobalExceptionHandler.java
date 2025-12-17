@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ApiResponse<Void>> handleUnknown(Exception ex) {
+	public ResponseEntity<ApiResponse<Void>> handleUnknown(Exception ignoredEx) {
 		var code = CommonErrorCode.INTERNAL_ERROR;
 		var error = ErrorResponse.from(code);
 		return ResponseEntity.status(code.httpStatus())

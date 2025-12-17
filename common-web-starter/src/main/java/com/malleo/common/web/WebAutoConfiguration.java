@@ -21,7 +21,7 @@ public class WebAutoConfiguration {
 		return bean;
 	}
 
-	// @RestControllerAdvice도 "빈으로 등록"되면 정상 동작합니다.
+	// @RestControllerAdvice도 "빈으로 등록"되면 정상 동작
 	@Bean
 	public GlobalExceptionHandler globalExceptionHandler() {
 		return new GlobalExceptionHandler();
