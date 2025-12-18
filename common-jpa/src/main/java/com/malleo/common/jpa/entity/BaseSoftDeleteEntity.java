@@ -17,10 +17,11 @@ public abstract class BaseSoftDeleteEntity extends BaseEntity {
 	@Column(name = "deleted_at")
 	private Instant deletedAt;
 
-	public void markDeleted() {
+	protected void markDeleted() {
 		this.deleted = true;
 		this.deletedAt = Instant.now();
 	}
+
 }
 
 /*
