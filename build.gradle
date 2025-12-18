@@ -24,11 +24,15 @@ subprojects {
         }
 
         dependencies {
-            // BOM은 compile/test 모두 정합성 있게 가져가려면 api/implementation보단 enforcedPlatform 권장
+            // Boot BOM
             implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
             testImplementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
 
-            // JUnit Jupiter + 런처 명시
+            // ⭐ 이 두 줄이 핵심
+            annotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
+            testAnnotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
+
+            // JUnit
             testImplementation 'org.junit.jupiter:junit-jupiter'
             testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         }

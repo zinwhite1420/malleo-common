@@ -17,6 +17,7 @@ dependencies {
         api "com.malleo:common-security-starter:${project.version}"
 
         // ✅ 외부 라이브러리 버전 관리 (원하는 만큼 추가)
+        api "org.projectlombok:lombok:1.18.42"
         api "org.slf4j:slf4j-api:2.0.12"
         api "com.fasterxml.jackson.core:jackson-databind:2.17.2"
         api "jakarta.validation:jakarta.validation-api:3.0.2"
