@@ -109,7 +109,7 @@ public class CommonSecurityAutoConfiguration {
 		JwtAuthenticationFilter jwtAuthenticationFilter,
 		RestAuthenticationEntryPoint authenticationEntryPoint,
 		RestAccessDeniedHandler accessDeniedHandler
-	) throws Exception {
+	) {
 
 		List<String> permitAll = properties.getPermitAll();
 

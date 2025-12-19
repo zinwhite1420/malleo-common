@@ -47,7 +47,8 @@ public class SecurityProperties {
 	public static class Cors {
 
 		private List<String> allowedOrigins = new ArrayList<>();
-		private List<String> allowedMethods = new ArrayList<>(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+		private List<String> allowedMethods = new ArrayList<>(List.of("GET", "POST", "PUT",
+			"PATCH", "DELETE", "OPTIONS"));
 		private List<String> allowedHeaders = new ArrayList<>(List.of("*"));
 		private List<String> exposedHeaders = new ArrayList<>(List.of("X-Trace-Id"));
 		private boolean allowCredentials = true;
