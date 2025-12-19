@@ -3,7 +3,8 @@ rootProject.name = 'malleo-common'
 include 'common-bom' //버전 관리
 include 'common-core'
 include 'common-jpa'
+include 'common-querydsl'
 include 'common-web-starter'
 include 'common-security-starter'
-include 'common-querydsl'
+
 
