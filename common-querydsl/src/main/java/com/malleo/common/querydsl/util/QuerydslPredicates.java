@@ -1,4 +1,3 @@
-
 package com.malleo.common.querydsl.util;
 
 import com.querydsl.core.types.dsl.BooleanExpression;

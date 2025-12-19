@@ -16,6 +16,7 @@ class QuerydslConditionsTest {
 	static class User { }
 
 	@Test
+	@SuppressWarnings("all")
 	void eq_returnsNull_whenValueNull() {
 		PathBuilder<User> user = new PathBuilder<>(User.class, "user");
 		StringPath email = user.getString("email");

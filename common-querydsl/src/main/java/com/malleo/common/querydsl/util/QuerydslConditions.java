@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.StringPath;
 
+@SuppressWarnings("all")
 public final class QuerydslConditions {
 
 	private QuerydslConditions() {
