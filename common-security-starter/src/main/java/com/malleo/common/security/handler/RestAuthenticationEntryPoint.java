@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -28,7 +29,7 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	public void commence(
 		HttpServletRequest request,
 		HttpServletResponse response,
-		AuthenticationException authException
+		@NonNull AuthenticationException authException
 	) throws IOException {
 
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

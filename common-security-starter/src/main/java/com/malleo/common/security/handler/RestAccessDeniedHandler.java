@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -28,7 +29,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(
 		HttpServletRequest request,
 		HttpServletResponse response,
-		AccessDeniedException accessDeniedException
+		@NonNull AccessDeniedException accessDeniedException
 	) throws IOException {
 
 		response.setStatus(HttpServletResponse.SC_FORBIDDEN);
