@@ -3,6 +3,20 @@ plugins {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // ✅ 버전 관리
+    api platform(project(':common-bom'))
+
+    api project(':common-core')
+    api project(':common-web-starter')
+
+    api 'org.springframework.boot:spring-boot-starter-security'
+    api 'org.springframework.boot:spring-boot-starter-web'
+
+    // ✅ ObjectMapper 직접 사용하므로 명시 (가장 확실)
+    api 'com.fasterxml.jackson.core:jackson-databind'
+
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }

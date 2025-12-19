@@ -1,4 +1,4 @@
-package com.malleo.common.querydsl;
+package com.malleo.common.querydsl.config;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
