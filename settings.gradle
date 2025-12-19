@@ -5,5 +5,5 @@ include 'common-core'
 include 'common-jpa'
 include 'common-web-starter'
 include 'common-security-starter'
-
+include 'common-querydsl'
 

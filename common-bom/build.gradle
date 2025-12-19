@@ -24,5 +24,7 @@ dependencies {
         api "org.postgresql:postgresql:42.7.4"
         api "io.jsonwebtoken:jjwt-api:0.11.5"
         api "org.apache.commons:commons-lang3:3.14.0"
+        api "com.querydsl:querydsl-jpa:5.1.0:jakarta"
+        api "com.querydsl:querydsl-apt:5.1.0:jakarta"
     }
 }
