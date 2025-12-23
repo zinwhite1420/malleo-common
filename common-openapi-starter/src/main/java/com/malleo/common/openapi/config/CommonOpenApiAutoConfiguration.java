@@ -22,8 +22,7 @@ public class CommonOpenApiAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(OpenAPI.class)
 	public OpenAPI commonOpenApi(OpenApiProperties props) {
-
-		OpenAPI openAPI = new OpenAPI()
+		OpenAPI openApi = new OpenAPI()
 			.info(new Info()
 				.title(props.title())
 				.description(props.description())
@@ -31,7 +30,7 @@ public class CommonOpenApiAutoConfiguration {
 			);
 
 		if (Boolean.TRUE.equals(props.securityEnabled())) {
-			openAPI
+			openApi
 				.addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH))
 				.components(new Components().addSecuritySchemes(
 					BEARER_AUTH,
@@ -43,6 +42,6 @@ public class CommonOpenApiAutoConfiguration {
 		}
 
 
-		return openAPI;
+		return openApi;
 	}
 }

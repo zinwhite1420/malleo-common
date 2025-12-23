@@ -10,9 +10,17 @@ public record OpenApiProperties(
 	Boolean securityEnabled
 ) {
 	public OpenApiProperties {
-		if (title == null || title.isBlank()) title = "Malleo API";
-		if (description == null) description = "";
-		if (version == null || version.isBlank()) version = "v1";
-		if (securityEnabled == null) securityEnabled = Boolean.TRUE; // ✅ 기본값 true
+		if (title == null || title.isBlank()) {
+			title = "Malleo API";
+		}
+		if (description == null) {
+			description = "";
+		}
+		if (version == null || version.isBlank()) {
+			version = "v1";
+		}
+		if (securityEnabled == null) {
+			securityEnabled = Boolean.TRUE; // ✅ 기본값 true
+		}
 	}
 }
