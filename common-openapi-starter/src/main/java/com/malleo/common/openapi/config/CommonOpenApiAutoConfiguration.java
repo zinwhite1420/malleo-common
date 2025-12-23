@@ -30,7 +30,7 @@ public class CommonOpenApiAutoConfiguration {
 				.version(props.version())
 			);
 
-		if (props.securityEnabled()) {
+		if (Boolean.TRUE.equals(props.securityEnabled())) {
 			openAPI
 				.addSecurityItem(new SecurityRequirement().addList(BEARER_AUTH))
 				.components(new Components().addSecuritySchemes(
@@ -41,6 +41,7 @@ public class CommonOpenApiAutoConfiguration {
 						.bearerFormat("JWT")
 				));
 		}
+
 
 		return openAPI;
 	}
