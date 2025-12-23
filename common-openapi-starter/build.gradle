@@ -1,0 +1,16 @@
+plugins {
+    id "java-library"
+}
+
+dependencies {
+    api project(":common-core")
+
+    api "org.springdoc:springdoc-openapi-starter-webmvc-ui"
+
+    // AutoConfiguration 작성에 필요
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+
+    // (선택) ConfigurationProperties 메타데이터 생성
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}

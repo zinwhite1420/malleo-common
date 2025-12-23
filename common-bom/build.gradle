@@ -25,5 +25,7 @@ dependencies {
         api("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
 
         api("org.postgresql:postgresql:${postgresqlVersion}")
+
+        api("org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiVersion}")
     }
 }
