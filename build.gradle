@@ -1,44 +1,48 @@
-plugins {
-    id 'java-library'
-    id 'org.springframework.boot' version '4.0.0' apply false
-    id 'io.spring.dependency-management' version '1.1.6' apply false
-}
-
 allprojects {
-    group = 'com.malleo'
-    version = '1.0.0'
+    group = "com.malleo"
+    version = findProperty("projectVersion") ?: "0.1.0-SNAPSHOT"
 
     repositories {
         mavenCentral()
     }
 }
 
-subprojects {
-    if (project.name != 'common-bom') {
-        apply plugin: 'java-library'
+subprojects { sub ->
+    apply plugin: "maven-publish"
 
-        java {
-            toolchain {
-                languageVersion = JavaLanguageVersion.of(25)
-            }
+    if (name == "common-bom") {
+        apply plugin: "java-platform"
+    } else {
+        apply plugin: "java-library"
+    }
+
+    sub.plugins.withType(JavaPlugin).configureEach {
+        extensions.configure(JavaPluginExtension) { ext ->
+            def javaVer = (sub.findProperty("javaVersion") ?: "25").toString().toInteger()
+            ext.toolchain.languageVersion = JavaLanguageVersion.of(javaVer)
         }
 
         dependencies {
-            // Boot BOM
-            implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
-            testImplementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
-
-            // ⭐ 이 두 줄이 핵심
-            annotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
-            testAnnotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:4.0.0')
-
-            // JUnit
-            testImplementation 'org.junit.jupiter:junit-jupiter'
-            testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+            add("testImplementation", "org.junit.jupiter:junit-jupiter")
+            add("testRuntimeOnly", "org.junit.platform:junit-platform-launcher")
         }
 
-        test {
+        tasks.withType(Test).configureEach {
             useJUnitPlatform()
         }
+    }
+
+    if (sub.name != "common-bom") {
+        sub.dependencies {
+            add("api", platform(project(":common-bom")))
+            add("testImplementation", platform(project(":common-bom")))
+            add("annotationProcessor", platform(project(":common-bom")))
+            add("testAnnotationProcessor", platform(project(":common-bom")))
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.compilerArgs += ["-parameters"]
     }
 }

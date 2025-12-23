@@ -3,28 +3,27 @@ plugins {
 }
 
 javaPlatform {
-    // 다른 BOM(Spring Boot 등)도 의존할 수 있게
     allowDependencies()
 }
 
 dependencies {
-    constraints {
-        // ✅ 내부 공통 모듈 버전 고정
-        // 루트에서 group/version을 공통으로 쓰고 있으니 ${project.version} 사용
-        api "com.malleo:common-core:${project.version}"
-        api "com.malleo:common-jpa:${project.version}"
-        api "com.malleo:common-web-starter:${project.version}"
-        api "com.malleo:common-security-starter:${project.version}"
+    api(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
 
-        // ✅ 외부 라이브러리 버전 관리 (원하는 만큼 추가)
-        api "org.projectlombok:lombok:1.18.42"
-        api "org.slf4j:slf4j-api:2.0.12"
-        api "com.fasterxml.jackson.core:jackson-databind:2.17.2"
-        api "jakarta.validation:jakarta.validation-api:3.0.2"
-        api "org.postgresql:postgresql:42.7.4"
-        api "io.jsonwebtoken:jjwt-api:0.11.5"
-        api "org.apache.commons:commons-lang3:3.14.0"
-        api "com.querydsl:querydsl-jpa:5.1.0:jakarta"
-        api "com.querydsl:querydsl-apt:5.1.0:jakarta"
+    constraints {
+        api("com.malleo:common-core:${project.version}")
+        api("com.malleo:common-jpa:${project.version}")
+        api("com.malleo:common-web-starter:${project.version}")
+        api("com.malleo:common-security-starter:${project.version}")
+
+        api("com.malleo:common-querydsl:${project.version}")
+        api("org.projectlombok:lombok:${lombokVersion}")
+
+        // QueryDSL (Boot BOM에서 관리하지 않거나, jakarta classifier 필요)
+        api("com.querydsl:querydsl-jpa:${querydslVersion}")
+        api("com.querydsl:querydsl-apt:${querydslVersion}")
+
+        api("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
+
+        api("org.postgresql:postgresql:${postgresqlVersion}")
     }
 }
