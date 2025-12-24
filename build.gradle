@@ -45,4 +45,21 @@ subprojects { sub ->
         options.encoding = "UTF-8"
         options.compilerArgs += ["-parameters"]
     }
+
+    sub.plugins.withId("maven-publish") {
+        sub.publishing {
+            repositories {
+                maven {
+                    if (!repoPath) {
+                        throw new GradleException("repoPath is required. ${repoPath}")
+                    }
+                    url = uri("https://maven.pkg.github.com/${repoPath}")
+                    credentials {
+                        username = (System.getenv("GITHUB_ACTOR") ?: findProperty("gpr.user"))?.toString()
+                        password = (System.getenv("GITHUB_TOKEN") ?: findProperty("gpr.key"))?.toString()
+                    }
+                }
+            }
+        }
+    }
 }

@@ -9,3 +9,7 @@ openapiVersion=2.6.0
 postgresqlVersion=42.7.4
 
 projectVersion=0.1.0-SNAPSHOT
+
+repoPath=<REPO_PATH>
+gpr.user=<USER_ID>
+gpr.key=<TOKEN>
