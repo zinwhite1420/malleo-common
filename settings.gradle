@@ -7,4 +7,5 @@ include 'common-querydsl'
 include 'common-web-starter'
 include 'common-security-starter'
 include 'common-openapi-starter'
+include 'common-redis-starter'
 
