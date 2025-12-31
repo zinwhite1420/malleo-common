@@ -15,10 +15,12 @@ dependencies {
     constraints {
         api("com.malleo:common-core:${project.version}")
         api("com.malleo:common-jpa:${project.version}")
-        api("com.malleo:common-web-starter:${project.version}")
-        api("com.malleo:common-security-starter:${project.version}")
-
+        api("com.malleo:common-openapi-starter:${project.version}")
         api("com.malleo:common-querydsl:${project.version}")
+        api("com.malleo:common-redis-starter:${project.version}")
+        api("com.malleo:common-security-starter:${project.version}")
+        api("com.malleo:common-web-starter:${project.version}")
+
         api("org.projectlombok:lombok:${lombokVersion}")
 
         // QueryDSL (Boot BOM에서 관리하지 않거나, jakarta classifier 필요)
