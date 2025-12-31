@@ -17,6 +17,7 @@ dependencies {
 
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:testcontainers"
+    testImplementation "com.redis:testcontainers-redis"
 }
 
 tasks.withType(Test).configureEach {

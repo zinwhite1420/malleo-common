@@ -30,5 +30,6 @@ dependencies {
         api("org.postgresql:postgresql:${postgresqlVersion}")
 
         api("org.springdoc:springdoc-openapi-starter-webmvc-ui:${openapiVersion}")
+        api("com.redis:testcontainers-redis:${redisVersion}")
     }
 }
