@@ -2,7 +2,7 @@ package com.malleo.common.redis.test;
 
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
-
+@SuppressWarnings("resource")
 public final class RedisTestContainer {
 
 	private static final DockerImageName REDIS_IMAGE =
