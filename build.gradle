@@ -8,25 +8,18 @@ allprojects {
 }
 
 subprojects { sub ->
-    // ------------------------------------------------------------
-    // 1) java 플러그인을 먼저 적용해야 components.* 가 생성
-    // ------------------------------------------------------------
+    // 공통 플러그인
+    apply plugin: "maven-publish"
+
+    // 모듈 타입별 플러그인
     if (sub.name == "common-bom") {
         apply plugin: "java-platform"
     } else {
         apply plugin: "java-library"
     }
 
-    // ------------------------------------------------------------
-    // 2) 그 다음에 maven-publish 적용
-    // ------------------------------------------------------------
-    apply plugin: "maven-publish"
-
-    // ------------------------------------------------------------
-    // 3) Java toolchain / test 설정 (java-library에만 적용됨)
-    //    (common-bom은 JavaPlugin이 아니라 JavaPlatformPlugin이므로 안전하게 분리)
-    // ------------------------------------------------------------
-    sub.plugins.withId("java") { // java-library에만 해당
+    // java-library일 때만 JDK toolchain / 테스트 설정
+    sub.plugins.withType(JavaPlugin).configureEach {
         sub.extensions.configure(JavaPluginExtension) { ext ->
             def javaVer = (sub.findProperty("javaVersion") ?: "25").toString().toInteger()
             ext.toolchain.languageVersion = JavaLanguageVersion.of(javaVer)
@@ -40,16 +33,9 @@ subprojects { sub ->
         sub.tasks.withType(Test).configureEach {
             useJUnitPlatform()
         }
-
-        sub.tasks.withType(JavaCompile).configureEach {
-            options.encoding = "UTF-8"
-            options.compilerArgs += ["-parameters"]
-        }
     }
 
-    // ------------------------------------------------------------
-    // 4) BOM을 다른 모듈에 적용 (BOM 모듈 제외)
-    // ------------------------------------------------------------
+    // BOM을 모든 라이브러리 모듈에 강제 적용 (common-bom 제외)
     if (sub.name != "common-bom") {
         sub.dependencies {
             add("api", platform(project(":common-bom")))
@@ -59,44 +45,48 @@ subprojects { sub ->
         }
     }
 
-    // ------------------------------------------------------------
-    // 5) 핵심: publications + repositories 설정
-    //    afterEvaluate로 components가 확실히 생성된 뒤 구성
-    // ------------------------------------------------------------
-    sub.afterEvaluate {
-        publishing {
-            publications {
-                if (sub.plugins.hasPlugin("java-library")) {
-                    create("mavenJava", MavenPublication) {
-                        from components.java
-                        // 필요하면 artifactId 명시 가능 (기본은 project.name)
-                        // artifactId = sub.name
-                    }
-                }
+    // 컴파일 옵션
+    sub.tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.compilerArgs += ["-parameters"]
+    }
 
-                if (sub.plugins.hasPlugin("java-platform")) {
-                    create("mavenBom", MavenPublication) {
-                        from components.javaPlatform
-                        // artifactId = sub.name
-                    }
+    // ✅ publishing은 "플러그인 적용 이후"에 안전하게 구성한다
+    sub.publishing {
+        // repository는 공통 1회 설정
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                def rp = (sub.findProperty("repoPath") ?: rootProject.findProperty("repoPath"))?.toString()
+                if (!rp) {
+                    throw new GradleException("repoPath is required. (ex: zinwhite1420/common-malleo)")
+                }
+                url = uri("https://maven.pkg.github.com/${rp}")
+                credentials {
+                    username = (System.getenv("GITHUB_ACTOR") ?: sub.findProperty("gpr.user"))?.toString()
+                    password = (System.getenv("GITHUB_TOKEN") ?: sub.findProperty("gpr.key"))?.toString()
                 }
             }
+        }
+    }
 
-            repositories {
-                maven {
-                    name = "GitHubPackages"
+    // ✅ java-library 모듈 publication
+    sub.plugins.withId("java-library") {
+        sub.publishing {
+            publications { pub ->
+                pub.register("mavenJava", MavenPublication) { MavenPublication p ->
+                    p.from(sub.components.java)
+                }
+            }
+        }
+    }
 
-                    def repoPath = (sub.findProperty("repoPath") ?: System.getenv("REPO_PATH"))?.toString()
-                    if (!repoPath) {
-                        throw new GradleException("repoPath is required. ex) owner/repo")
-                    }
-
-                    url = uri("https://maven.pkg.github.com/${repoPath}")
-
-                    credentials {
-                        username = (System.getenv("GITHUB_ACTOR") ?: sub.findProperty("gpr.user"))?.toString()
-                        password = (System.getenv("GITHUB_TOKEN") ?: sub.findProperty("gpr.key"))?.toString()
-                    }
+    // ✅ java-platform(common-bom) publication
+    sub.plugins.withId("java-platform") {
+        sub.publishing {
+            publications { pub ->
+                pub.register("mavenBom", MavenPublication) { MavenPublication p ->
+                    p.from(sub.components.javaPlatform)
                 }
             }
         }
