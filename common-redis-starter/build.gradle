@@ -14,11 +14,9 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    // Testcontainers로 실제 redis 붙이고 싶으면 (선택)
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:testcontainers'
-    testImplementation 'org.testcontainers:redis'
 
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:testcontainers"
 }
 
 tasks.withType(Test).configureEach {

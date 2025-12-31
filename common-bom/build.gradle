@@ -9,6 +9,9 @@ javaPlatform {
 dependencies {
     api(platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}"))
 
+    // Testcontainers BOM (버전 고정)
+    api platform("org.testcontainers:testcontainers-bom:${testcontainersVersion}")
+
     constraints {
         api("com.malleo:common-core:${project.version}")
         api("com.malleo:common-jpa:${project.version}")
